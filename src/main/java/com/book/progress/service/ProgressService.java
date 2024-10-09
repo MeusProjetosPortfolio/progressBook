@@ -45,4 +45,25 @@ public class ProgressService {
 
         return null;
     }
+
+    public boolean deleteProgress(Long id){
+        Optional<Progress> progressOptional = progressRepository.findById(id);
+
+        if (progressOptional.isPresent()) {
+            Progress progress = progressOptional.get();
+
+            if (progress.getReadings() != null) {
+                progress.getReadings().clear();
+            }
+
+            if (progress.getUser() != null) {
+                progress.getUser().setProgress(null);
+            }
+
+            progressRepository.delete(progress);
+            return true;
+        }
+
+        return false;
+    }
 }
