@@ -23,9 +23,8 @@ public class Archievement {
     //QUANTIDADE DE PONTOS PARA LIBERAR A CONQUISTA(EX: 50/100/150)
     private Integer points;
 
-    //DATA DO DESBLOQUEIO DA CONQUISTA
-    @Temporal(TemporalType.DATE)
-    private Date dateUnlocked;
+    //INDICAÇÃO SE É UMA CONQUISTA PREDEFINIDA OU CRIADA PELO USUÁRIO
+    private boolean isCustom;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
