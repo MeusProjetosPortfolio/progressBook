@@ -1,6 +1,5 @@
 package com.book.progress.data.dto;
-
-import java.util.Date;
+import java.util.List;
 
 public class UserDto {
     private Long id;
@@ -8,7 +7,7 @@ public class UserDto {
     private String email;
     private String readerLevel;
 
-    private List<ReadingDTO> readings;
-    private ProgressDTO progress;
-    private List<ArchivementDTO> archivements;
+    private List<ReadingDto> readingDtos;
+    private ProgressDto progressDto;
+    private List<ArchivementDto>archivementDtos;
 }
