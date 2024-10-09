@@ -23,9 +23,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    //DATA QUE SE CADASTROU NA APLICAÇÃO
-    private Date registrationDate;
-
     //DATA DE ANIVERSÁRIO
     @Temporal(TemporalType.DATE)
     private Date birthday;
