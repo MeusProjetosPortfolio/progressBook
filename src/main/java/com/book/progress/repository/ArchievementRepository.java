@@ -1,7 +1,7 @@
 package com.book.progress.repository;
 
-import com.book.progress.model.Archivement;
+import com.book.progress.model.Archievement;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ArchivementRepository extends JpaRepository<Archivement, Long> {
+public interface ArchievementRepository extends JpaRepository<Archievement, Long> {
 }

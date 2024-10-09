@@ -2,7 +2,6 @@ package com.book.progress.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.boot.archive.spi.ArchiveContext;
 
 import java.util.Date;
 import java.util.List;
@@ -41,6 +40,6 @@ public class User {
     private Progress progress;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Archivement> archivements;
+    private List<Archievement> archievements;
 
 }
