@@ -24,5 +24,45 @@ public class ArchievementService {
         return archivementRepository.findById(id);
     }
 
-    //
+    //SALVAR UMA NOVA CONQUISTA
+    public Archievement saveArquievement(Archievement archievement){
+        archievement.setCustom(true);//LOMBOK GERA O SET SEM O "IS"
+
+        return archivementRepository.save(archievement);
+    }
+
+    //ATUALIZAR PONTOS DE UMA CONQUISTA PERSONALIZADA
+    public Optional<Archievement> updateArchievementPoints(Long id, Integer newPoints){
+        Optional<Archievement> optionalArchievement = archivementRepository.findById(id);
+
+        if (optionalArchievement.isPresent()){
+            Archievement archievement = optionalArchievement.get();
+
+            if (archievement.isCustom()){
+                archievement.setPoints(newPoints);
+                archivementRepository.save(archievement);
+
+                return Optional.of(archievement);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    //DELETAR UMA CONQUISTA PERSONALIZADA
+    public boolean deleteArchievement(Long id){
+        Optional<Archievement> optionalArchievement = archivementRepository.findById(id);
+
+        if (optionalArchievement.isPresent()){
+            Archievement archievement = optionalArchievement.get();
+
+            if (archievement.isCustom()){
+                archivementRepository.delete(archievement);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
