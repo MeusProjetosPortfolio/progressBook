@@ -8,7 +8,7 @@ public class ArchivementDto {
     private String name;
     private String description;
     private Integer points;
-    private Date dateUnlocked;
+    private  boolean isCustom;
 
     private UserDto userDto;
 }
