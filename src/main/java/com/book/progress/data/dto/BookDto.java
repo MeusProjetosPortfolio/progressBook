@@ -1,5 +1,8 @@
 package com.book.progress.data.dto;
 
+import lombok.Data;
+
+@Data
 public class BookDto {
 
     private Long id;
