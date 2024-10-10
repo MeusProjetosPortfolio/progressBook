@@ -1,6 +1,8 @@
 package com.book.progress.service;
 
+import com.book.progress.model.Book;
 import com.book.progress.model.Reading;
+import com.book.progress.model.User;
 import com.book.progress.repository.ReadingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,18 @@ public class ReadingService {
     }
 
     //SALVAR A LEITURA
-    public Reading saveReading(Reading reading){
+    public Reading saveReading(Reading reading, User user, Book book){
+        reading.setUser(user);
+        reading.setBook(book);
         return readingRepository.save(reading);
     }
 
     //ATUALIZAR A LEITURA
     public Reading updateReading(Reading reading){
-        return readingRepository.save(reading);
+        if (reading.getUser() != null && reading.getBook() != null) {
+            return readingRepository.save(reading);
+        }
+        throw new IllegalArgumentException("User and Book must be associated with Reading");
     }
 
     //DELETAR A LEITURA

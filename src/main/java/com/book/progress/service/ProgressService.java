@@ -35,10 +35,9 @@ public class ProgressService {
 
     //ATUALIZAR O STATUS
     public Progress updateProgressStatus(Long id, String novoStatus) {
-        Optional<Progress> progressOptional = progressRepository.findById(id);
+       Progress progress = progressRepository.findById(id).orElse(null);
 
-        if (progressOptional.isPresent()) {
-            Progress progress = progressOptional.get();
+        if (progress != null) {
             progress.setStatus(novoStatus);
             return progressRepository.save(progress);
         }
@@ -48,22 +47,10 @@ public class ProgressService {
 
     public boolean deleteProgress(Long id){
         Optional<Progress> progressOptional = progressRepository.findById(id);
-
         if (progressOptional.isPresent()) {
-            Progress progress = progressOptional.get();
-
-            if (progress.getReadings() != null) {
-                progress.getReadings().clear();
-            }
-
-            if (progress.getUser() != null) {
-                progress.getUser().setProgress(null);
-            }
-
-            progressRepository.delete(progress);
+            progressRepository.deleteById(id);
             return true;
         }
-
         return false;
     }
 }
