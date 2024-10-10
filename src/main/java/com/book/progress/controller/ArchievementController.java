@@ -1,4 +1,4 @@
 package com.book.progress.controller;
 
-public class UserController {
+public class ArchievementController {
 }
