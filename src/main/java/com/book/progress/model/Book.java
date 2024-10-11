@@ -3,6 +3,8 @@ package com.book.progress.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "books")
@@ -22,11 +24,11 @@ public class Book {
     //GÊNERO DA OBRA
     private String genre;
 
-    //ANO DE PUBLICAÇÃO DA OBRA
-    private Integer publicationYear;
-
     //TOTAL DE PÁGINAS DO LIVRO
     @Column(nullable = false)
     private Integer totalPages;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reading> readingList;
 
 }

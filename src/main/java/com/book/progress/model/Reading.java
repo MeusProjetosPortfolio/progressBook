@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,12 +29,16 @@ public class Reading {
     private Integer rating;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
+
+    @OneToOne(mappedBy = "reading", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Progress progress;
+
+
+
 
 
 

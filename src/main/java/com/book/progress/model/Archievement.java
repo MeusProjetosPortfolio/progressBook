@@ -3,8 +3,6 @@ package com.book.progress.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
-
 @Entity
 @Data
 @Table(name = "archievements")
@@ -26,7 +24,7 @@ public class Archievement {
     //INDICAÇÃO SE É UMA CONQUISTA PREDEFINIDA OU CRIADA PELO USUÁRIO
     private boolean isCustom;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
+   @ManyToOne
+   @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.util.List;
 
-
 @Entity
 @Data
 @Table(name = "progress")
@@ -15,30 +14,17 @@ public class Progress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //STATUS: LENDO/LIDO/ABANDONADO
+    //STATUS: LENDO/LIDO/ABANDONADO OK
     private String status;
 
-    //QUANTIDADE DE LIVROS LIDOS
-    private Integer booksRead;
-
-    //PONTUAÇÃO TOTAL ACUMULADA
-    private Integer totalPoints;
-
-    //PORCENTAGEM DO PROGRESSO DE LEITURA DO LIVRO
+    //PORCENTAGEM DO PROGRESSO DE LEITURA DO LIVRO OK
     private Double averageReadingProgress;
 
-    //QUANTIDADE DE CONQUISTAS DESBLOQUEADAS
-    private Integer achievementsUnlocked;
-
-    //QUANTIDADE DE DIAS PARA TERMINAR O LIVRO
+    //QUANTIDADE DE DIAS QUE DEMOREI PARA LER OK
     private Integer readingDurationInDays;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
-    private List<Reading> readings;
+    private Reading reading;
 
 
 
