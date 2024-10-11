@@ -1,7 +1,8 @@
 package com.book.progress.data.dto;
 
-import java.util.Date;
+import lombok.Data;
 
+@Data
 public class ArchivementDto {
 
     private Long id;
