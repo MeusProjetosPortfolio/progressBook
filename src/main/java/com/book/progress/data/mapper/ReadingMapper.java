@@ -3,6 +3,9 @@ package com.book.progress.data.mapper;
 import com.book.progress.data.dto.ReadingDto;
 import com.book.progress.model.Reading;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ReadingMapper {
     public static ReadingDto toDto(Reading reading){
         ReadingDto dto = new ReadingDto();
@@ -35,10 +38,32 @@ public class ReadingMapper {
         reading.setEndDate(dto.getEndDate());
         reading.setRating(dto.getRating());
 
-        reading.setUser(UserMapper.toEntity(dto.getUserDto()));
-        reading.setBook(BookMapper.toEntity(dto.getBookDto()));
-        reading.setProgress(ProgressMapper.toEntity(dto.getProgressDto()));
+        if (dto.getUserDto() != null){
+            reading.setUser(UserMapper.toEntity(dto.getUserDto()));
+        }
+
+        if (dto.getBookDto() != null){
+            reading.setBook(BookMapper.toEntity(dto.getBookDto()));
+        }
+
+        if (dto.getProgressDto() != null) {
+            reading.setProgress(ProgressMapper.toEntity(dto.getProgressDto()));
+        }
 
         return reading;
+    }
+
+    // Converter uma lista de 'Reading' para uma lista de 'ReadingDto'
+    public static List<ReadingDto> toDto(List<Reading> readings) {
+        return readings.stream()
+                .map(ReadingMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    // Converter uma lista de 'ReadingDto' para uma lista de 'Reading'
+    public static List<Reading> toEntity(List<ReadingDto> readingDtos) {
+        return readingDtos.stream()
+                .map(ReadingMapper::toEntity)
+                .collect(Collectors.toList());
     }
 }

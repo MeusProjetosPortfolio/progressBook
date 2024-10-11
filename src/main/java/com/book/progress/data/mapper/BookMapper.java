@@ -1,5 +1,6 @@
-package com.book.progress.data.dto;
+package com.book.progress.data.mapper;
 
+import com.book.progress.data.dto.BookDto;
 import com.book.progress.model.Book;
 
 public class BookMapper {
