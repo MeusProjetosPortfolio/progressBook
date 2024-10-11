@@ -1,7 +1,7 @@
 package com.book.progress.controller;
 
 import com.book.progress.data.dto.BookDto;
-import com.book.progress.data.dto.BookMapper;
+import com.book.progress.data.mapper.BookMapper;
 import com.book.progress.model.Book;
 import com.book.progress.service.BookService;
 import jakarta.persistence.EntityNotFoundException;

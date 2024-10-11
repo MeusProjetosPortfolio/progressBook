@@ -1,7 +1,7 @@
 package com.book.progress.controller;
 
 import com.book.progress.data.dto.UserDto;
-import com.book.progress.data.dto.UserMapper;
+import com.book.progress.data.mapper.UserMapper;
 import com.book.progress.model.User;
 import com.book.progress.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserDto updatUser(@PathVariable Long id, @RequestBody UserDto dtoUser) {
+    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto dtoUser) {
 
         if (!userService.findIdUser(id).isPresent()) {
             throw new EntityNotFoundException("Pessoa não encontrada com o id " + id);
