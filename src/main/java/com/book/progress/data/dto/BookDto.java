@@ -2,6 +2,8 @@ package com.book.progress.data.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class BookDto {
 
@@ -9,6 +11,6 @@ public class BookDto {
     private String title;
     private String author;
     private String genre;
-    private Integer publicationYear;
     private Integer totalPages;
+    private List<ReadingDto> readingDtoList;
 }
