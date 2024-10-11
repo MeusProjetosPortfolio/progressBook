@@ -1,6 +1,8 @@
 package com.book.progress.data.dto;
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class ReadingDto {
 
     private Long id;
