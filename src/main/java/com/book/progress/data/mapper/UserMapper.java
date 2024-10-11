@@ -1,5 +1,6 @@
-package com.book.progress.data.dto;
+package com.book.progress.data.mapper;
 
+import com.book.progress.data.dto.UserDto;
 import com.book.progress.model.User;
 
 public class UserMapper {
@@ -8,8 +9,12 @@ public class UserMapper {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
         dto.setName(user.getName());
-        dto.setEmail(user.getEmail());
         dto.setReaderLevel(user.getReaderLevel());
+
+        if (user.getReadingList()!= null){
+            dto.setReadingDtos(user.getReadingList().stream()
+                    .map());
+        }
 
         return dto;
     }
@@ -18,7 +23,6 @@ public class UserMapper {
         User user = new User();
         user.setId(dto.getId());
         user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
         user.setReaderLevel(dto.getReaderLevel());
 
         return user;
