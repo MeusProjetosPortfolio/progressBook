@@ -11,7 +11,11 @@ public class BookMapper {
         dto.setTitle(book.getTitle());
         dto.setAuthor(book.getAuthor());
         dto.setGenre(book.getGenre());
-        dto.setPublicationYear(book.getPublicationYear());
+        dto.setTotalPages(book.getTotalPages());
+
+        if (book.getReadingList() != null){
+            dto.setReadingDtoList(ReadingMapper.toDto(book.getReadingList()));
+        }
 
         return dto;
     }
@@ -22,7 +26,11 @@ public class BookMapper {
         book.setTitle(dto.getTitle());
         book.setAuthor(dto.getAuthor());
         book.setGenre(dto.getGenre());
-        book.setPublicationYear(dto.getPublicationYear());
+        book.setTotalPages(dto.getTotalPages());
+
+        if (dto.getReadingDtoList() != null) {
+            book.setReadingList(ReadingMapper.toEntity(dto.getReadingDtoList()));
+        }
 
         return book;
     }
