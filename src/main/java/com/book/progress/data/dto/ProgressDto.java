@@ -1,7 +1,8 @@
 package com.book.progress.data.dto;
 
-import java.util.List;
+import lombok.Data;
 
+@Data
 public class ProgressDto {
     private Long id;
     private String status;
