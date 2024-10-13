@@ -52,8 +52,8 @@ public class UserController {
 
         User user = UserMapper.toEntity(dtoUser);
         user.setId(id);
-        User userUpdated = userService.updateUser(user);
-        return UserMapper.toDto(userUpdated);
+        User userUpdate = userService.updateUser(user);
+        return UserMapper.toDto(userUpdate);
     }
 
 
