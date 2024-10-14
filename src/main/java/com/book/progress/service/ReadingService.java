@@ -27,9 +27,7 @@ public class ReadingService {
     }
 
     //SALVAR A LEITURA
-    public Reading saveReading(Reading reading, User user, Book book){
-        reading.setUser(user);
-        reading.setBook(book);
+    public Reading saveReading(Reading reading){
         return readingRepository.save(reading);
     }
 
