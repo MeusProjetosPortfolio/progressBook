@@ -26,26 +26,25 @@ public class ArchievementService {
 
     //SALVAR UMA NOVA CONQUISTA
     public Archievement saveArquievement(Archievement archievement) {
-        archievement.setCustom(true);//LOMBOK GERA O SET SEM O "IS"
-
         return archivementRepository.save(archievement);
     }
 
     //ATUALIZAR PONTOS DE UMA CONQUISTA PERSONALIZADA
-    public Optional<Archievement> updateArchievementPoints(Long id, Integer newPoints) {
-        Archievement archievement = archivementRepository.findById(id).orElse(null);
-        if (archievement != null && archievement.isCustom()) {
-            archievement.setPoints(newPoints);
-            return Optional.of(archivementRepository.save(archievement));
-        }
-        return Optional.empty();
+    public Optional<Archievement> updateArchievement(Long id, Archievement newArchievementData) {
+        return archivementRepository.findById(id).map(existingArchievement ->{
+            existingArchievement.setName(newArchievementData.getName());
+            existingArchievement.setDescription(newArchievementData.getDescription());
+            existingArchievement.setPoints(newArchievementData.getPoints());
+
+            return archivementRepository.save(existingArchievement);
+        });
     }
 
     //DELETAR UMA CONQUISTA PERSONALIZADA
     public boolean deleteArchievement(Long id) {
-        Archievement archievement = archivementRepository.findById(id).orElse(null);
-        if (archievement != null && archievement.isCustom()) {
-            archivementRepository.delete(archievement);
+        Optional<Archievement> archievement = archivementRepository.findById(id);
+        if (archievement.isPresent()) {
+            archivementRepository.delete(archievement.get());
             return true;
         }
         return false;
