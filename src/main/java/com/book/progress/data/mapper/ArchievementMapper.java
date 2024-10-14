@@ -15,7 +15,6 @@ public class ArchievementMapper {
         dto.setName(archievement.getName());
         dto.setDescription(archievement.getDescription());
         dto.setPoints(archievement.getPoints());
-        dto.setCustom(archievement.isCustom());
 
         if (archievement.getUser() != null) {
             dto.setUserDto(UserMapper.toDto(archievement.getUser()));
@@ -30,7 +29,6 @@ public class ArchievementMapper {
         archievement.setName(dto.getName());
         archievement.setDescription(dto.getDescription());
         archievement.setPoints(dto.getPoints());
-        archievement.setCustom(dto.isCustom());
 
         if (dto.getUserDto() != null) {
             archievement.setUser(UserMapper.toEntity(dto.getUserDto()));
