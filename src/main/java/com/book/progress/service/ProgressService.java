@@ -1,7 +1,9 @@
 package com.book.progress.service;
 
+import com.book.progress.data.dto.ProgressDto;
 import com.book.progress.model.Progress;
 import com.book.progress.repository.ProgressRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,15 +36,14 @@ public class ProgressService {
     }
 
     //ATUALIZAR O STATUS
-    public Progress updateProgressStatus(Long id, String novoStatus) {
-       Progress progress = progressRepository.findById(id).orElse(null);
+    public Progress updateProgressStatus(Long id, ProgressDto dtoProgress) {
+       Progress progressExisting = progressRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Progresso não encontrado com o id " + id));
 
-        if (progress != null) {
-            progress.setStatus(novoStatus);
-            return progressRepository.save(progress);
-        }
+        progressExisting.setStatus(dtoProgress.getStatus());
+        progressExisting.setAverageReadingProgress(dtoProgress.getAverageReadingProgress());
+        progressExisting.setReadingDurationInDays(dtoProgress.getReadingDurationInDays());
 
-        return null;
+        return progressRepository.save(progressExisting);
     }
 
     public boolean deleteProgress(Long id){
