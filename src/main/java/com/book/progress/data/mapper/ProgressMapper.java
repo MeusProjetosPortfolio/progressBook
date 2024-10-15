@@ -2,7 +2,9 @@ package com.book.progress.data.mapper;
 
 import com.book.progress.data.dto.ProgressDto;
 import com.book.progress.model.Progress;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProgressMapper {
     public static ProgressDto toDto(Progress progress){
         ProgressDto dto = new ProgressDto();

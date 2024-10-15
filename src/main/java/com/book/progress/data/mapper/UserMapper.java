@@ -2,10 +2,12 @@ package com.book.progress.data.mapper;
 
 import com.book.progress.data.dto.UserDto;
 import com.book.progress.model.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class UserMapper {
 
     public static UserDto toDto(User user){

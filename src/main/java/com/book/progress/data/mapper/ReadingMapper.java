@@ -2,10 +2,12 @@ package com.book.progress.data.mapper;
 
 import com.book.progress.data.dto.ReadingDto;
 import com.book.progress.model.Reading;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ReadingMapper {
     public static ReadingDto toDto(Reading reading){
         ReadingDto dto = new ReadingDto();

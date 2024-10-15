@@ -2,7 +2,9 @@ package com.book.progress.data.mapper;
 
 import com.book.progress.data.dto.BookDto;
 import com.book.progress.model.Book;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookMapper {
 
     public static BookDto toDto(Book book){
