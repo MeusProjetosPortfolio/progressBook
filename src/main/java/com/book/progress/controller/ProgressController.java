@@ -30,11 +30,18 @@ public class ProgressController {
     }
 
     @GetMapping("/{id}")
-    public ProgressDto findByProgressId(@PathVariable Long id){
+    public ProgressDto findByProgressId(@PathVariable Long id) {
 
         return progressService.findIdProgress(id)
                 .map(ProgressMapper::toDto)
-                .orElseThrow(()->new EntityNotFoundException("Não encontrado o progresso com o id " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Não encontrado o progresso com o id " + id));
+    }
+
+    @PostMapping
+    public ProgressDto createProgress(@RequestBody ProgressDto dtoProgress) {
+        Progress progress = ProgressMapper.toEntity(dtoProgress);
+        Progress progressSave = progressService.saveProgress(progress);
+        return ProgressMapper.toDto(progressSave);
     }
 
     @PutMapping("/{id}")
@@ -45,7 +52,7 @@ public class ProgressController {
             throw new EntityNotFoundException("Progresso não encontrado com o id " + id);
         }
 
-        Progress progressUpdate = progressService.updateProgressStatus(id,dtoProgress);
+        Progress progressUpdate = progressService.updateProgressStatus(id, dtoProgress);
 
         return ResponseEntity.ok(ProgressMapper.toDto(progressUpdate));
     }
