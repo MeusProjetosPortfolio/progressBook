@@ -69,6 +69,7 @@ return readingDtos;
         return ReadingMapper.toDto(readingUpdate);
     }
 
+    @DeleteMapping("/{id}")
     public void  readingDelete(@PathVariable Long id) {
         readingService.deleteReading(id);
     }
