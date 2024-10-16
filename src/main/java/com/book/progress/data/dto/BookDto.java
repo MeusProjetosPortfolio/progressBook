@@ -12,5 +12,4 @@ public class BookDto {
     private String author;
     private String genre;
     private Integer totalPages;
-    private List<ReadingDto> readingDtoList;
 }
