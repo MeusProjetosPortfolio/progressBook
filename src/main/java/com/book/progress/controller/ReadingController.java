@@ -3,6 +3,7 @@ package com.book.progress.controller;
 import com.book.progress.data.dto.ReadingDto;
 import com.book.progress.data.mapper.BookMapper;
 import com.book.progress.data.mapper.ReadingMapper;
+import com.book.progress.data.mapper.UserMapper;
 import com.book.progress.model.Reading;
 import com.book.progress.service.ReadingService;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -59,14 +61,31 @@ return readingDtos;
     @PutMapping("/{id}")
     public ReadingDto updateReading(@PathVariable Long id, @RequestBody ReadingDto dtoReading) {
 
-        if (!readingService.findIdReading(id).isPresent()) {
-            throw new EntityNotFoundException("Pessoa não encontrada com o id: " + id);
+        Optional<Reading> existingReadingOpt = readingService.findIdReading(id);
+
+        if (!existingReadingOpt.isPresent()){
+            throw new EntityNotFoundException("Leitura não encontrada com o id: " + id);
         }
 
-        Reading reading = ReadingMapper.toEntity(dtoReading);
-        reading.setId(id);
-        Reading readingUpdate = readingService.updateReading(reading);
+        Reading existingReading = existingReadingOpt.get();
+
+        existingReading.setCurrentPage(dtoReading.getCurrentPage());
+        existingReading.setStartDate(dtoReading.getStartDate());
+        existingReading.setEndDate(dtoReading.getEndDate());
+        existingReading.setRating(dtoReading.getRating());
+
+        if (dtoReading.getUserDto() != null){
+            existingReading.setUser(UserMapper.toEntity(dtoReading.getUserDto()));
+        }
+
+        if (dtoReading.getBookDto() != null){
+            existingReading.setBook(BookMapper.toEntity(dtoReading.getBookDto()));
+        }
+
+        Reading readingUpdate = readingService.updateReading(existingReading);
+
         return ReadingMapper.toDto(readingUpdate);
+
     }
 
     @DeleteMapping("/{id}")
