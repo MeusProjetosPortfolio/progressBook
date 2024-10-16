@@ -29,19 +29,12 @@ public class Reading {
     private Integer rating;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @OneToOne(mappedBy = "reading", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reading", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Progress progress;
-
-
-
-
-
 
 }
