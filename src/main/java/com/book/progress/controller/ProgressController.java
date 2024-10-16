@@ -57,6 +57,7 @@ public class ProgressController {
         return ResponseEntity.ok(ProgressMapper.toDto(progressUpdate));
     }
 
+    @DeleteMapping("/{id}")
     public void progressDelete(@PathVariable Long id) {
         progressService.deleteProgress(id);
     }
