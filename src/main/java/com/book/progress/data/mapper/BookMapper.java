@@ -15,10 +15,6 @@ public class BookMapper {
         dto.setGenre(book.getGenre());
         dto.setTotalPages(book.getTotalPages());
 
-        if (book.getReadingList() != null){
-            dto.setReadingDtoList(ReadingMapper.toDto(book.getReadingList()));
-        }
-
         return dto;
     }
 
@@ -30,9 +26,6 @@ public class BookMapper {
         book.setGenre(dto.getGenre());
         book.setTotalPages(dto.getTotalPages());
 
-        if (dto.getReadingDtoList() != null) {
-            book.setReadingList(ReadingMapper.toEntity(dto.getReadingDtoList()));
-        }
 
         return book;
     }
