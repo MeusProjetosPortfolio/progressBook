@@ -56,6 +56,7 @@ public class BookController {
         return BookMapper.toDto(bookUpdate);
     }
 
+    @DeleteMapping("/{id}")
     public void bookDelete(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
