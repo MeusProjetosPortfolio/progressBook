@@ -27,8 +27,4 @@ public class Book {
     //TOTAL DE PÁGINAS DO LIVRO
     @Column(nullable = false)
     private Integer totalPages;
-
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Reading> readingList;
-
 }
