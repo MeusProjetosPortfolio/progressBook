@@ -31,18 +31,6 @@ public class ReadingController {
                 .collect(Collectors.toList()); //COLETANDO ESSAS INFORM
     }
 
-    /*
-List<Reading> readings = readingService.listAllReading();
-List<ReadingDto> readingDtos = new ArrayList<>();
-
-for (Reading reading : readings) {
-    readingDtos.add(ReadingMapper.toDto(reading));
-}
-
-return readingDtos;
-
-*/
-
     @GetMapping("/{id}")
     public ReadingDto findByReadingId(@PathVariable Long id){
 
