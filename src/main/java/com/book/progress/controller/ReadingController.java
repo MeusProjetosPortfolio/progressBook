@@ -48,7 +48,7 @@ return readingDtos;
 
         return readingService.findIdReading(id)
                 .map(ReadingMapper::toDto)
-                .orElseThrow(()->new EntityNotFoundException("Pessoa não encontrada com o id " + id));
+                .orElseThrow(()->new EntityNotFoundException("Leitura não encontrada com o id " + id));
     }
 
     @PostMapping
