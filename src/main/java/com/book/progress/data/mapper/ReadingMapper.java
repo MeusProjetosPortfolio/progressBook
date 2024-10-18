@@ -1,7 +1,10 @@
 package com.book.progress.data.mapper;
 
 import com.book.progress.data.dto.ReadingDto;
+import com.book.progress.model.Book;
+import com.book.progress.model.Progress;
 import com.book.progress.model.Reading;
+import com.book.progress.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ReadingMapper {
-    public static ReadingDto toDto(Reading reading){
+    public static ReadingDto toDto(Reading reading) {
         ReadingDto dto = new ReadingDto();
         dto.setId(reading.getId());
         dto.setCurrentPage(reading.getCurrentPage());
@@ -17,7 +20,7 @@ public class ReadingMapper {
         dto.setEndDate(reading.getEndDate());
         dto.setRating(reading.getRating());
 
-        if (reading.getUser() != null){
+        if (reading.getUser() != null) {
             dto.setUserDto(UserMapper.toDto(reading.getUser()));
         }
 
@@ -28,11 +31,11 @@ public class ReadingMapper {
         if (reading.getProgress() != null) {
             dto.setProgressDto(ProgressMapper.toDto(reading.getProgress()));
         }
-            return dto;
+        return dto;
 
     }
 
-    public static Reading toEntity(ReadingDto dto){
+    public static Reading toEntity(ReadingDto dto) {
         Reading reading = new Reading();
         reading.setId(dto.getId());
         reading.setCurrentPage(dto.getCurrentPage());
@@ -40,18 +43,25 @@ public class ReadingMapper {
         reading.setEndDate(dto.getEndDate());
         reading.setRating(dto.getRating());
 
-        if (dto.getUserDto() != null){
-            reading.setUser(UserMapper.toEntity(dto.getUserDto()));
+        if (dto.getUserDto() != null && dto.getUserDto().getId() != null) {
+            User user = new User();
+            user.setId(dto.getUserDto().getId());
+            reading.setUser(user);
         }
 
-        if (dto.getBookDto() != null){
-            reading.setBook(BookMapper.toEntity(dto.getBookDto()));
+        if (dto.getBookDto() != null && dto.getBookDto().getId() != null) {
+            Book book = new Book();
+            book.setId(dto.getBookDto().getId());
+            reading.setBook(book);
         }
 
-        if (dto.getProgressDto() != null) {
-            reading.setProgress(ProgressMapper.toEntity(dto.getProgressDto()));
+        if (dto.getProgressDto() != null && dto.getProgressDto().getId() != null) {
+            Progress progress = new Progress();
+            progress.setId(dto.getProgressDto().getId());
+            reading.setProgress(progress);
         }
-
+// Log final para ver o objeto criado
+        System.out.println("Created Reading entity: " + reading);
         return reading;
     }
 
