@@ -9,6 +9,6 @@ public class UserDto {
     private String name;
     private String readerLevel;
 
-    private List<ReadingDto> readingDtos;
-    private List<ArchivementDto>archivementDtos;
+    private List<ReadingDto> readingDtoList;
+    private List<ArchievementDto>archievementDtoList;
 }
