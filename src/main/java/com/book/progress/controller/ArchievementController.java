@@ -1,6 +1,6 @@
 package com.book.progress.controller;
 
-import com.book.progress.data.dto.ArchivementDto;
+import com.book.progress.data.dto.ArchievementDto;
 import com.book.progress.data.mapper.ArchievementMapper;
 import com.book.progress.model.Archievement;
 import com.book.progress.service.ArchievementService;
@@ -20,7 +20,7 @@ public class ArchievementController {
     private ArchievementService archievementService;
 
     @GetMapping
-    public List<ArchivementDto> archivementDtoList() {
+    public List<ArchievementDto> archivementDtoList() {
         List<Archievement> archievements = archievementService.findAllArchivement();
 
         return archievements.stream()
@@ -29,21 +29,21 @@ public class ArchievementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArchivementDto> findArchievementById(@PathVariable Long id) {
+    public ResponseEntity<ArchievementDto> findArchievementById(@PathVariable Long id) {
         Optional<Archievement> archievement = archievementService.findIdArchivement(id);
         return archievement.map(value -> ResponseEntity.ok(ArchievementMapper.toDto(value)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ArchivementDto createArchievement(@RequestBody ArchivementDto dtoArchievement){
+    public ArchievementDto createArchievement(@RequestBody ArchievementDto dtoArchievement){
         Archievement archievement = ArchievementMapper.toEntity(dtoArchievement);
         Archievement archievementSave = archievementService.saveArquievement(archievement);
         return ArchievementMapper.toDto(archievementSave);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArchivementDto> updateArchievement(@PathVariable Long id, @RequestBody ArchivementDto dtoArchievement){
+    public ResponseEntity<ArchievementDto> updateArchievement(@PathVariable Long id, @RequestBody ArchievementDto dtoArchievement){
         Archievement newArchievementData = ArchievementMapper.toEntity(dtoArchievement);
         Optional<Archievement> archievementUpdate = archievementService.updateArchievement(id,newArchievementData);
 
