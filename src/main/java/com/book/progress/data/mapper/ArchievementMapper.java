@@ -1,7 +1,7 @@
 package com.book.progress.data.mapper;
 
 
-import com.book.progress.data.dto.ArchivementDto;
+import com.book.progress.data.dto.ArchievementDto;
 import com.book.progress.model.Archievement;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 @Component
 public class ArchievementMapper {
 
-    public static ArchivementDto toDto(Archievement archievement){
-        ArchivementDto dto = new ArchivementDto();
+    public static ArchievementDto toDto(Archievement archievement){
+        ArchievementDto dto = new ArchievementDto();
         dto.setId(archievement.getId());
         dto.setName(archievement.getName());
         dto.setDescription(archievement.getDescription());
@@ -25,7 +25,7 @@ public class ArchievementMapper {
         return dto;
     }
 
-    public static Archievement toEntity(ArchivementDto dto) {
+    public static Archievement toEntity(ArchievementDto dto) {
         Archievement archievement = new Archievement();
         archievement.setId(dto.getId());
         archievement.setName(dto.getName());
@@ -40,13 +40,13 @@ public class ArchievementMapper {
     }
 
     // Métodos para converter listas de Archievement para ArchivementDto e vice-versa
-    public static List<ArchivementDto> toDto(List<Archievement> archievements) {
+    public static List<ArchievementDto> toDto(List<Archievement> archievements) {
         return archievements.stream()
                 .map(ArchievementMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public static List<Archievement> toEntity(List<ArchivementDto> archivementDtos) {
+    public static List<Archievement> toEntity(List<ArchievementDto> archivementDtos) {
         return archivementDtos.stream()
                 .map(ArchievementMapper::toEntity)
                 .collect(Collectors.toList());
