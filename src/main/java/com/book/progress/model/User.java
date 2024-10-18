@@ -21,10 +21,5 @@ public class User {
     //NÍVEL DE LEITURA
     private String readerLevel;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Reading> readingList;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Archievement> archievementList;
 
 }

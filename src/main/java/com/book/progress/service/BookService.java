@@ -1,12 +1,15 @@
 package com.book.progress.service;
 
+import com.book.progress.data.dto.BookDto;
+import com.book.progress.dozer.DozerConverter;
+import com.book.progress.exception.CommonsException;
 import com.book.progress.model.Book;
 import com.book.progress.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -15,23 +18,23 @@ public class BookService {
     private BookRepository bookRepository;
 
     //LISTA TODOS OS LIVROS
-    public List<Book> listAllBook() {
-        return bookRepository.findAll();
+    public List<BookDto> listAllBook() {
+        return DozerConverter.parseListObjects(bookRepository.findAll(),BookDto.class);
     }
 
     //BUSCA O LIVRO POR ID
-    public Optional<Book> findIdBook(Long id) {
-        return bookRepository.findById(id);
+    public BookDto findIdBook(Long id) {
+        var bookEntity = bookRepository.findById(id);
+        if (bookEntity.isEmpty()){
+            throw new CommonsException(HttpStatus.NOT_FOUND,"book.service.notfound","não foi encontrado");
+        }
+
+        return DozerConverter.parseObject(bookRepository.findById(id),BookDto.class);
     }
 
     //SALVA O LIVRO
-    public Book saveBook(Book book) {
-        return bookRepository.save(book);
-    }
-
-    //ATUALIZAR O LIVRO
-    public  Book updateBook(Book book){
-        return bookRepository.save(book);
+    public BookDto saveBook(BookDto bookDto) {
+        return DozerConverter.parseObject(bookRepository.save(DozerConverter.parseObject(bookDto,Book.class)),BookDto.class);
     }
 
     //DELETAR O LIVRO

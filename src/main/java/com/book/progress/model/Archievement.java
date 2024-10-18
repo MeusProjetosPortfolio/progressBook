@@ -18,10 +18,6 @@ public class Archievement {
     //DESCRIÇÃO DA CONQUISTA
     private String description;
 
-    //QUANTIDADE DE PONTOS PARA LIBERAR A CONQUISTA(EX: 50/100/150)
+    //QUANTIDADE DE PONTOS PARA LIBERAR A CONQUISTA(EX: 50/100/150) livro
     private Integer points;
-
-   @ManyToOne
-   @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 }

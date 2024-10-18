@@ -1,15 +1,11 @@
 package com.book.progress.controller;
 
 import com.book.progress.data.dto.UserDto;
-import com.book.progress.data.mapper.UserMapper;
-import com.book.progress.model.User;
 import com.book.progress.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -19,43 +15,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<UserDto> userDtoList() {
-        List<User> users = userService.listAllUser();
-
-        return users.stream()
-                .map(UserMapper::toDto)
-                .collect(Collectors.toList());
+        return userService.listAllUser();
     }
 
     @GetMapping("/{id}")
     public UserDto findByUserId(@PathVariable Long id) {
-
-        return userService.findIdUser(id)
-                .map(UserMapper::toDto)
-                .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada com o id: " + id));
+        return userService.findIdUser(id);
     }
 
     @PostMapping
     public UserDto createUser(@RequestBody UserDto dtoUser) {
-        User user = UserMapper.toEntity(dtoUser);
-        User userSave = userService.saveUser(user);
-        return UserMapper.toDto(userSave);
+        return userService.saveUser(dtoUser);
     }
 
     @PutMapping("/{id}")
-    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto dtoUser) {
-
-        if (!userService.findIdUser(id).isPresent()) {
-            throw new EntityNotFoundException("Pessoa não encontrada com o id " + id);
-        }
-
-        User user = UserMapper.toEntity(dtoUser);
-        user.setId(id);
-        User userUpdate = userService.updateUser(user);
-        return UserMapper.toDto(userUpdate);
+    public UserDto updateUser(@RequestBody UserDto dtoUser) {
+        return userService.saveUser(dtoUser);
     }
-
 
     @DeleteMapping("/{id}")
     public void userDelete(@PathVariable Long id) {

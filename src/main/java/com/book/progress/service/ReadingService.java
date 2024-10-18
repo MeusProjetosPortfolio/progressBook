@@ -1,14 +1,14 @@
 package com.book.progress.service;
 
-import com.book.progress.model.Book;
+import com.book.progress.data.dto.ReadingDto;
+import com.book.progress.dozer.DozerConverter;
+import com.book.progress.exception.CommonsException;
 import com.book.progress.model.Reading;
-import com.book.progress.model.User;
 import com.book.progress.repository.ReadingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReadingService {
@@ -17,26 +17,23 @@ public class ReadingService {
     private ReadingRepository readingRepository;
 
     //Listar todas as leituras
-    public List<Reading> listAllReading() {
-        return readingRepository.findAll();
+    public List<ReadingDto> listAllReading() {
+        return DozerConverter.parseListObjects(readingRepository.findAll(), ReadingDto.class);
     }
 
     //BUSCA A LEITURA POR ID
-    public Optional<Reading> findIdReading(Long id) {
-        return readingRepository.findById(id);
+    public ReadingDto findIdReading(Long id) {
+        var readingEntity = readingRepository.findById(id);
+        if (readingEntity.isEmpty()){
+            throw new CommonsException(HttpStatus.NOT_FOUND,"reading.service.notfound","não foi encontrado");
+        }
+        return DozerConverter.parseObject(readingRepository.findById(id), ReadingDto.class);
     }
 
     //SALVAR A LEITURA
-    public Reading saveReading(Reading reading){
-        return readingRepository.save(reading);
-    }
-
-    //ATUALIZAR A LEITURA
-    public Reading updateReading(Reading reading){
-        if (reading.getUser() != null && reading.getBook() != null) {
-            return readingRepository.save(reading);
-        }
-        throw new IllegalArgumentException("User and Book must be associated with Reading");
+    public ReadingDto saveReading(ReadingDto readingDto){
+        var entity = readingRepository.save(DozerConverter.parseObject(readingDto,Reading.class));
+        return DozerConverter.parseObject(entity, ReadingDto.class);
     }
 
     //DELETAR A LEITURA

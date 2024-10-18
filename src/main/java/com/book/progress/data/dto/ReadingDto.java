@@ -12,10 +12,7 @@ public class ReadingDto {
     private Date endDate;
     private Integer rating;
 
-    @JsonProperty("user")
-    private UserDto userDto;
-    @JsonProperty("book")
-    private BookDto bookDto;
-
+    private UserDto user;
+    private BookDto book;
     private ProgressDto progressDto;
 }
