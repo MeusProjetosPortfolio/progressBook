@@ -1,4 +1,5 @@
 package com.book.progress.data.dto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +12,10 @@ public class ReadingDto {
     private Date endDate;
     private Integer rating;
 
+    @JsonProperty("user")
     private UserDto userDto;
+    @JsonProperty("book")
     private BookDto bookDto;
+
     private ProgressDto progressDto;
 }
