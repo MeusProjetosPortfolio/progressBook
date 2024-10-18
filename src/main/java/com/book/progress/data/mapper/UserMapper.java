@@ -10,30 +10,34 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
-    public static UserDto toDto(User user){
+    public static UserDto toDto(User user) {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setReaderLevel(user.getReaderLevel());
 
-        if (user.getReadingList()!= null){
-            dto.setReadingDtos(ReadingMapper.toDto(user.getReadingList()));
+        if (user.getReadingList() != null) {
+            dto.setReadingDtoList(ReadingMapper.toDto(user.getReadingList()));
         }
 
-        if (user.getArchievementList()!=null){
-            dto.setArchivementDtos(ArchievementMapper.toDto(user.getArchievementList()));
+        if (user.getArchievementList() != null) {
+            dto.setArchievementDtoList(ArchievementMapper.toDto(user.getArchievementList()));
         }
         return dto;
     }
 
-    public static User toEntity(UserDto dto){
+    public static User toEntity(UserDto dto) {
         User user = new User();
         user.setId(dto.getId());
         user.setName(dto.getName());
         user.setReaderLevel(dto.getReaderLevel());
 
-        if (dto.getArchivementDtos()!=null) {
-            user.setArchievementList(ArchievementMapper.toEntity(dto.getArchivementDtos()));
+        if (dto.getReadingDtoList() != null) {
+            user.setReadingList(ReadingMapper.toEntity(dto.getReadingDtoList()));
+        }
+
+        if (dto.getArchievementDtoList() != null) {
+            user.setArchievementList(ArchievementMapper.toEntity(dto.getArchievementDtoList()));
         }
         return user;
     }
