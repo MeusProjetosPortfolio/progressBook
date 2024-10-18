@@ -3,7 +3,7 @@ package com.book.progress.data.dto;
 import lombok.Data;
 
 @Data
-public class ArchivementDto {
+public class ArchievementDto {
 
     private Long id;
     private String name;
