@@ -1,15 +1,10 @@
 package com.book.progress.controller;
 
 import com.book.progress.data.dto.ReadingDto;
-import com.book.progress.model.Reading;
 import com.book.progress.service.ReadingService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/readings")
