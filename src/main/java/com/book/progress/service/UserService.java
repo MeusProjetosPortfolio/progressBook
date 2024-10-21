@@ -34,6 +34,19 @@ public class UserService {
         return DozerConverter.parseObject(userEntity.get(),UserDto.class);
     }
 
+    //ATUALIZAR O USUÁRIO
+    public UserDto updateUser(Long id, UserDto userDto){
+        var existingUser = userRepository.findById(id);
+        if (existingUser.isEmpty()){
+            throw new CommonsException(HttpStatus.NOT_FOUND, "user.service.notfound", "Usuário não encontrado" );
+        }
+
+        User userToUpdate = DozerConverter.parseObject(userDto, User.class);
+        userToUpdate.setId(id);
+
+        return DozerConverter.parseObject(userRepository.save(userToUpdate), UserDto.class);
+    }
+
     //SALVA O USUÁRIO
     public UserDto saveUser(UserDto userDto) {
         //var entity = DozerConverter.parseObject(userDto,User.class);
