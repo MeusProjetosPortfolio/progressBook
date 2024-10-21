@@ -14,18 +14,14 @@ public class Progress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //STATUS: LENDO/LIDO/ABANDONADO OK
+    //STATUS: LENDO/LIDO/ABANDONADO
+    @Column(nullable = false)
     private String status;
 
-    //PORCENTAGEM DO PROGRESSO DE LEITURA DO LIVRO OK
+    //PORCENTAGEM DO PROGRESSO DE LEITURA DO LIVRO
     private Double averageReadingProgress;
 
-    //QUANTIDADE DE DIAS QUE DEMOREI PARA LER OK
+    //QUANTIDADE DE DIAS QUE DEMOREI PARA LER
     private Integer readingDurationInDays;
-
-    @OneToOne
-    private Reading reading;
-
-
 
 }
