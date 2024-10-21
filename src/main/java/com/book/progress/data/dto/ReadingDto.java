@@ -14,5 +14,5 @@ public class ReadingDto {
 
     private UserDto user;
     private BookDto book;
-    private ProgressDto progressDto;
+    private ProgressDto progress;
 }
