@@ -32,6 +32,20 @@ public class BookService {
         return DozerConverter.parseObject(bookRepository.findById(id),BookDto.class);
     }
 
+    //ATUALIZAR O LIVRO
+    public BookDto updateBook(Long id, BookDto bookDto) {
+        var existingBook = bookRepository.findById(id);
+        if (existingBook.isEmpty()) {
+            throw new CommonsException(HttpStatus.NOT_FOUND, "book.service.notfound", "Livro não encontrado para atualização");
+        }
+
+        Book bookToUpdate = DozerConverter.parseObject(bookDto, Book.class);
+        bookToUpdate.setId(id);
+
+        return DozerConverter.parseObject(bookRepository.save(bookToUpdate), BookDto.class);
+    }
+
+
     //SALVA O LIVRO
     public BookDto saveBook(BookDto bookDto) {
         return DozerConverter.parseObject(bookRepository.save(DozerConverter.parseObject(bookDto,Book.class)),BookDto.class);
