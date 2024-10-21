@@ -9,5 +9,4 @@ public class ProgressDto {
     private Double averageReadingProgress;
     private Integer readingDurationInDays;
 
-    private ReadingDto readingDto;
 }
