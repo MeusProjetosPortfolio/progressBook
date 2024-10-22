@@ -29,7 +29,7 @@ public class BookService {
             throw new CommonsException(HttpStatus.NOT_FOUND,"book.service.notfound","não foi encontrado");
         }
 
-        return DozerConverter.parseObject(bookRepository.findById(id),BookDto.class);
+        return DozerConverter.parseObject(bookEntity.get(),BookDto.class);
     }
 
     //ATUALIZAR O LIVRO

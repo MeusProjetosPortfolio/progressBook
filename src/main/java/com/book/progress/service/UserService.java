@@ -29,8 +29,6 @@ public class UserService {
         if (userEntity.isEmpty()){
             throw new CommonsException(HttpStatus.NOT_FOUND,"user.service.notfound","não foi encontrado");
         }
-        //var userEntity = userRepository.findAll();
-        //var userEntityDto = DozerConverter.ParseObject(userRepository.findById(id),UserDto.class);
         return DozerConverter.parseObject(userEntity.get(),UserDto.class);
     }
 

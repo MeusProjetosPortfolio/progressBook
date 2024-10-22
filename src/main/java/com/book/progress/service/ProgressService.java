@@ -27,7 +27,7 @@ public class ProgressService {
         if (progressEntity.isEmpty()){
             throw new CommonsException(HttpStatus.NOT_FOUND,"progress.service.notfound","não foi encontrado");
         }
-        return DozerConverter.parseObject(progressRepository.findById(id),ProgressDto.class);
+        return DozerConverter.parseObject(progressEntity.get(), ProgressDto.class);
     }
 
     //SALVAR O STATUS

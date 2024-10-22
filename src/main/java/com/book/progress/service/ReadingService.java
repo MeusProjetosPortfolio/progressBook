@@ -41,7 +41,7 @@ public class ReadingService {
         if (readingEntity.isEmpty()){
             throw new CommonsException(HttpStatus.NOT_FOUND,"reading.service.notfound","não foi encontrado");
         }
-        return DozerConverter.parseObject(readingRepository.findById(id), ReadingDto.class);
+        return DozerConverter.parseObject(readingEntity.get(),ReadingDto.class);
     }
 
     //SALVAR A LEITURA

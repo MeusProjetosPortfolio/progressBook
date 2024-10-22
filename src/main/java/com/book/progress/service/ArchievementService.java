@@ -27,7 +27,7 @@ public class ArchievementService {
         if (archievementEntity.isEmpty()){
             throw new CommonsException(HttpStatus.NOT_FOUND,"archievement.service.notfound","não foi encontrado");
         }
-        return DozerConverter.parseObject(archievementRepository.findById(id),ArchievementDto.class);
+        return DozerConverter.parseObject(archievementEntity.get(),ArchievementDto.class);
     }
 
     //SALVAR UMA NOVA CONQUISTA
