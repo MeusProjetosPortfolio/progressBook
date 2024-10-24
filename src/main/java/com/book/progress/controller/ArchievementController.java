@@ -30,8 +30,8 @@ public class ArchievementController {
     }
 
     @PutMapping("/{id}")
-    public ArchievementDto updateArchievement(@RequestBody ArchievementDto dtoArchievement){
-        return archievementService.saveArquievement(dtoArchievement);
+    public ArchievementDto updateArchievement(@PathVariable Long id, @RequestBody ArchievementDto dtoArchievement){
+        return archievementService.updateArchievement(id,dtoArchievement);
     }
 
     @DeleteMapping("/{id}")
