@@ -30,6 +30,19 @@ public class ProgressService {
         return DozerConverter.parseObject(progressEntity.get(), ProgressDto.class);
     }
 
+    //ATUALIZAR O PROGRESSO
+    public ProgressDto updateProgress(Long id, ProgressDto progressDto){
+        var existingProgress = progressRepository.findById(id);
+        if (existingProgress.isEmpty()){
+            throw new CommonsException(HttpStatus.NOT_FOUND, "progress.service.notfound", "Usuário não encontrado" );
+        }
+
+        Progress progressToUpdate = DozerConverter.parseObject(progressDto,Progress.class);
+        progressToUpdate.setId(id);
+
+        return  DozerConverter.parseObject(progressRepository.save(progressToUpdate),ProgressDto.class);
+    }
+
     //SALVAR O STATUS
     public ProgressDto saveProgress(ProgressDto progressDto) {
         return DozerConverter.parseObject(progressRepository.save(DozerConverter.parseObject(progressDto,Progress.class)),ProgressDto.class);
