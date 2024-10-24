@@ -35,8 +35,8 @@ public class ProgressController {
     }
 
     @PutMapping("/{id}")
-    public ProgressDto updateProgress(@RequestBody ProgressDto dtoProgress) {
-        return progressService.saveProgress(dtoProgress);
+    public ProgressDto updateProgress(@PathVariable Long id, @RequestBody ProgressDto dtoProgress) {
+        return progressService.updateProgress(id,dtoProgress);
     }
 
     @DeleteMapping("/{id}")
