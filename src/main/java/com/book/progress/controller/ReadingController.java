@@ -32,7 +32,7 @@ public class ReadingController {
 
     @PutMapping("/{id}")
     public ReadingDto updateReading(@PathVariable Long id, @RequestBody ReadingDto dtoReading) {
-        return readingService.saveReading(dtoReading);
+        return readingService.updateReading(id,dtoReading);
     }
 
     @DeleteMapping("/{id}")
