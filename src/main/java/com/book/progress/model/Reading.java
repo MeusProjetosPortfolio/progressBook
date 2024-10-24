@@ -34,7 +34,7 @@ public class Reading {
     @ManyToOne(fetch = FetchType.EAGER)
     private Book book;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Progress progress;
 
 }
