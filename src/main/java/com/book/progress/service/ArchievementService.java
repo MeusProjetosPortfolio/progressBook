@@ -37,8 +37,10 @@ public class ArchievementService {
             throw new CommonsException(HttpStatus.NOT_FOUND,  "archievement.service.notfound", "Conquista não encontrada");
         }
 
-        Archievement archievementToUpdate = DozerConverter.parseObject(ArchievementDto,Archievement.class);
+        Archievement archievementToUpdate = DozerConverter.parseObject(archievementDto,Archievement.class);
         archievementToUpdate.setId(id);
+
+        return DozerConverter.parseObject(archievementRepository.save(archievementToUpdate), ArchievementDto.class);
     }
 
     //SALVAR UMA NOVA CONQUISTA
