@@ -30,6 +30,17 @@ public class ArchievementService {
         return DozerConverter.parseObject(archievementEntity.get(),ArchievementDto.class);
     }
 
+    //ATUALIZAR A CONQUISTA
+    public ArchievementDto updateArchievement(Long id, ArchievementDto archievementDto){
+        var existingArchievement = archievementRepository.findById(id);
+        if (existingArchievement.isEmpty()){
+            throw new CommonsException(HttpStatus.NOT_FOUND,  "archievement.service.notfound", "Conquista não encontrada");
+        }
+
+        Archievement archievementToUpdate = DozerConverter.parseObject(ArchievementDto,Archievement.class);
+        archievementToUpdate.setId(id);
+    }
+
     //SALVAR UMA NOVA CONQUISTA
     public ArchievementDto saveArquievement(ArchievementDto archievementDto ) {
         return DozerConverter.parseObject(archievementRepository.save(DozerConverter.parseObject(archievementDto,Archievement.class)),ArchievementDto.class);
