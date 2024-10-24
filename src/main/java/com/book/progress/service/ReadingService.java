@@ -44,6 +44,19 @@ public class ReadingService {
         return DozerConverter.parseObject(readingEntity.get(),ReadingDto.class);
     }
 
+    //ATUALIZAR A LEITURA
+    public  ReadingDto updateReading(Long id, ReadingDto readingDto){
+        var existingReading = readingRepository.findById(id);
+        if (existingReading.isEmpty()){
+            throw new CommonsException(HttpStatus.NOT_FOUND, "reading.service.notfound", "Leitura não encontrado");
+        }
+
+        Reading readingToUpdate = DozerConverter.parseObject(readingDto,Reading.class);
+        readingToUpdate.setId(id);
+
+        return DozerConverter.parseObject(readingRepository.save(readingToUpdate), ReadingDto.class);
+    }
+
     //SALVAR A LEITURA
     public ReadingDto saveReading(ReadingDto readingDto){
         var user = userRepository.findById(readingDto.getUser().getId())
