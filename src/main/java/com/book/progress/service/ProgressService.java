@@ -8,7 +8,12 @@ import com.book.progress.repository.ProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProgressService {
@@ -52,5 +57,21 @@ public class ProgressService {
     //DELETAR O PROGRESSO
     public void deleteProgress(Long id){
         progressRepository.deleteById(id);
+    }
+
+
+    // CALCULAR DURAÇÃO DA LEITURA EM DIAS
+    public long calculateReadingDuration(Long progressId) {
+        var progressEntity = progressRepository.findById(progressId);
+        if (progressEntity.isEmpty()) {
+            throw new CommonsException(HttpStatus.NOT_FOUND, "progress.service.notfound", "Progresso não encontrado");
+        }
+
+        Progress progress = progressEntity.get();
+        LocalDate startDate = progress.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = progress.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Calcular diferença em dias
+        return Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays();
     }
 }
