@@ -2,9 +2,8 @@ package com.book.progress.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.Date;
-import java.util.List;
+
 
 @Entity
 @Data
@@ -32,8 +31,5 @@ public class Progress {
 
     //PORCENTAGEM DO PROGRESSO DE LEITURA DO LIVRO
     private Double averageReadingProgress;
-
-    //QUANTIDADE DE DIAS QUE DEMOREI PARA LER
-    private Integer readingDurationInDays;
 
 }
