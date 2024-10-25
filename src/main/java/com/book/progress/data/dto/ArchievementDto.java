@@ -9,4 +9,5 @@ public class ArchievementDto {
     private String name;
     private String description;
     private Integer points;
+    private String imgArchievement;
 }
