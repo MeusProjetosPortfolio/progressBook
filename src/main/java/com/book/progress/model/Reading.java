@@ -14,17 +14,6 @@ public class Reading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //PÁGINAS ATUAL
-    private Integer currentPage;
-
-    //DATA DE INÍCIO
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
-
-    //DATA DE TÉRMINO
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
-
     //NOTA EM RELAÇÃO À QUALIDADE DO LIVRO(1 à 5)
     private Integer rating;
 

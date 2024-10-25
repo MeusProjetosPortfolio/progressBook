@@ -18,6 +18,9 @@ public class Archievement {
     //DESCRIÇÃO DA CONQUISTA
     private String description;
 
-    //QUANTIDADE DE PONTOS PARA LIBERAR A CONQUISTA(EX: 50/100/150) livro
+    //QUANTIDADE DE LIVROS LIDOS PARA LIBERAR A CONQUISTA(EX: 5/10/15) livro
     private Integer points;
+
+    //IMAGEM DA CONQUISTA
+    private String imgArchievement;
 }
