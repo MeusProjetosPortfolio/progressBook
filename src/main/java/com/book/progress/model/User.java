@@ -3,7 +3,6 @@ package com.book.progress.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 @Entity
@@ -17,6 +16,12 @@ public class User {
     //NOME DO USUÁRIO
     @Column(nullable = false)
     private String name;
+
+    //EMAIL
+    private String email;
+
+    //FOTO DE PERFIL
+    private String photo;
 
     //NÍVEL DE LEITURA
     private String readerLevel;
