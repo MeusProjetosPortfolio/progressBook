@@ -18,9 +18,6 @@ public class Progress {
     @Column(nullable = false)
     private String status;
 
-    //PÁGINA ATUAL
-    private Integer currentPage;
-
     //DATA DE INÍCIO
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -29,7 +26,5 @@ public class Progress {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    //PORCENTAGEM DO PROGRESSO DE LEITURA DO LIVRO
-    private Double averageReadingProgress;
 
 }
