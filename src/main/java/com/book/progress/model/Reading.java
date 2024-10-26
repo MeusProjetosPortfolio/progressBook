@@ -3,9 +3,6 @@ package com.book.progress.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
-import java.util.List;
-
 @Entity
 @Data
 @Table(name = "readings")
@@ -16,6 +13,9 @@ public class Reading {
 
     //NOTA EM RELAÇÃO À QUALIDADE DO LIVRO(1 à 5)
     private Integer rating;
+
+    //PÁGINA ATUAL
+    private Integer currentPage;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
