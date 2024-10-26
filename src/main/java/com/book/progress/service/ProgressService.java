@@ -89,7 +89,7 @@ public class ProgressService {
     }
 
     // Duração
-    private void calculateDuration(ProgressDto progressDto) {
+    public void calculateDuration(ProgressDto progressDto) {
         if (progressDto.getStartDate() == null) {
             throw new CommonsException(HttpStatus.BAD_REQUEST, "progress.service.invaliddate", "Data de início não pode ser nula");
         }
