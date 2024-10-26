@@ -1,5 +1,4 @@
 package com.book.progress.service;
-
 import com.book.progress.data.dto.ReadingDto;
 import com.book.progress.dozer.DozerConverter;
 import com.book.progress.exception.CommonsException;
@@ -11,6 +10,7 @@ import com.book.progress.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -28,7 +28,8 @@ public class ReadingService {
     @Autowired
     private ProgressRepository progressRepository;
 
-    //final
+    @Autowired
+    private ProgressService progressService;
 
     //Listar todas as leituras
     public List<ReadingDto> listAllReading() {
@@ -80,9 +81,12 @@ public class ReadingService {
         // Salvar a entidade Reading
         var savedReading = readingRepository.save(reading);
 
-        // Retornar o DTO atualizado
-        return DozerConverter.parseObject(savedReading, ReadingDto.class);
+        ReadingDto savedReadingDto = DozerConverter.parseObject(savedReading, ReadingDto.class);
+        progressService.calculateDuration(savedReadingDto.getProgress());
+
+        return savedReadingDto;
     }
+
 
     //DELETAR A LEITURA
     public void deleteReading(Long id) {
