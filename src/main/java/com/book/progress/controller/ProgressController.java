@@ -1,15 +1,11 @@
 package com.book.progress.controller;
 
 import com.book.progress.data.dto.ProgressDto;
-import com.book.progress.model.Progress;
 import com.book.progress.service.ProgressService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/progress")
@@ -27,6 +23,11 @@ public class ProgressController {
     @GetMapping("/{id}")
     public ProgressDto findByProgressId(@PathVariable Long id) {
         return progressService.findIdProgress(id);
+    }
+
+    @GetMapping("/{id}/duration")
+    public ProgressDto getReadingDuration(@PathVariable Long id) {
+        return progressService.calculateReadingDuration(id);
     }
 
     @PostMapping
