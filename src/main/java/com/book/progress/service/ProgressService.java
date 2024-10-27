@@ -1,10 +1,13 @@
 package com.book.progress.service;
 
 import com.book.progress.data.dto.ProgressDto;
+import com.book.progress.data.dto.ReadingDto;
 import com.book.progress.dozer.DozerConverter;
 import com.book.progress.exception.CommonsException;
 import com.book.progress.model.Progress;
+import com.book.progress.model.Reading;
 import com.book.progress.repository.ProgressRepository;
+import com.book.progress.repository.ReadingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,9 @@ public class ProgressService {
 
     @Autowired
     private ProgressRepository progressRepository;
+
+    @Autowired
+    private ReadingRepository readingRepository;
 
     //LISTAR TODOS OS PROGRESSOS
     public List<ProgressDto> findAllProgress() {
@@ -57,6 +63,29 @@ public class ProgressService {
 
         return updatedProgressDto;
     }
+
+    //ATUALIZAÇÃO
+    public ProgressDto updateCurrentPage(Long progressId, Long readingId, Integer currentPage) {
+        var progressEntity = progressRepository.findById(progressId)
+                .orElseThrow(() -> new CommonsException(HttpStatus.NOT_FOUND, "progress.service.notfound", "Progress não encontrado"));
+
+        var readingEntity = readingRepository.findById(readingId)
+                .orElseThrow(() -> new CommonsException(HttpStatus.NOT_FOUND, "reading.service.notfound", "Reading não encontrado"));
+
+        // Atualiza a página atual e recalcula a porcentagem de progresso
+        readingEntity.setCurrentPage(currentPage);
+        readingRepository.save(readingEntity);
+
+        ProgressDto progressDto = DozerConverter.parseObject(progressEntity, ProgressDto.class);
+        calculatePercentage(progressDto, DozerConverter.parseObject(readingEntity, ReadingDto.class));
+
+        // Atualiza o progresso no banco de dados após calcular a porcentagem
+        Progress progressToUpdate = DozerConverter.parseObject(progressDto,Progress.class);
+        progressRepository.save(progressToUpdate);
+
+        return progressDto;
+    }
+
 
     //SALVAR O STATUS
     public ProgressDto saveProgress(ProgressDto progressDto) {
@@ -99,6 +128,20 @@ public class ProgressService {
             progressDto.setDurationInDays(durationInDays);
         } else {
             progressDto.setDurationInDays(null);
+        }
+    }
+
+    //PORCENTAGEM
+    public void calculatePercentage(ProgressDto progressDto, ReadingDto readingDto){
+        if (readingDto.getCurrentPage() != null
+            && readingDto.getBook() != null
+            && readingDto.getBook().getTotalPages() != null
+            && readingDto.getBook().getTotalPages()>0) {
+
+            double percentage = (double) readingDto.getCurrentPage() / readingDto.getBook().getTotalPages() * 100;
+            progressDto.setPercentage(percentage);
+        } else {
+            progressDto.setPercentage(0.0);
         }
     }
 }
