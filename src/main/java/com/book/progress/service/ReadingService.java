@@ -84,6 +84,8 @@ public class ReadingService {
         ReadingDto savedReadingDto = DozerConverter.parseObject(savedReading, ReadingDto.class);
         progressService.calculateDuration(savedReadingDto.getProgress());
 
+        progressService.calculatePercentage(savedReadingDto.getProgress(), savedReadingDto);
+
         return savedReadingDto;
     }
 

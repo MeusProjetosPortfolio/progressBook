@@ -11,5 +11,6 @@ public class ProgressDto {
     private Date startDate;
     private Date endDate;
     private Long durationInDays;
+    private Double percentage;
 
 }
