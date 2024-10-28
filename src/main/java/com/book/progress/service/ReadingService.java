@@ -33,7 +33,18 @@ public class ReadingService {
 
     //Listar todas as leituras
     public List<ReadingDto> listAllReading() {
-        return DozerConverter.parseListObjects(readingRepository.findAll(), ReadingDto.class);
+        List<ReadingDto> readingDtoList = DozerConverter.parseListObjects(readingRepository.findAll(), ReadingDto.class);
+
+// Cálculo de duração e porcentagem em cada leitura
+        readingDtoList.forEach(readingDto -> {
+            if (readingDto.getProgress() != null) {
+                // Calcula a duração e a porcentagem do progresso associado à leitura
+                progressService.calculateDuration(readingDto.getProgress());
+                progressService.calculatePercentage(readingDto.getProgress(), readingDto);
+            }
+        });
+
+        return readingDtoList;
     }
 
     //BUSCA A LEITURA POR ID
