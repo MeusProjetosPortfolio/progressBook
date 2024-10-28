@@ -25,11 +25,6 @@ public class ProgressController {
         return progressService.findIdProgress(id);
     }
 
-    @GetMapping("/{id}/duration")
-    public ProgressDto getReadingDuration(@PathVariable Long id) {
-        return progressService.calculateReadingDuration(id);
-    }
-
     @PostMapping
     public ProgressDto createProgress(@RequestBody ProgressDto dtoProgress) {
         return progressService.saveProgress(dtoProgress);
