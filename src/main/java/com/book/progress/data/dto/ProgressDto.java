@@ -12,5 +12,6 @@ public class ProgressDto {
     private Date endDate;
     private Long durationInDays;
     private Double percentage;
+    private Integer booksRead = 0;
 
 }
