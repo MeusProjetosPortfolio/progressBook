@@ -11,6 +11,7 @@ public class ProgressDto {
     private String status;
     private Date startDate;
     private Date endDate;
+    private String progressNote;
     private Long durationInDays;
     private Double percentage;
     private Integer booksRead = 0;
