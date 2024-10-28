@@ -5,7 +5,6 @@ import com.book.progress.data.dto.ReadingDto;
 import com.book.progress.dozer.DozerConverter;
 import com.book.progress.exception.CommonsException;
 import com.book.progress.model.Progress;
-import com.book.progress.model.Reading;
 import com.book.progress.repository.ProgressRepository;
 import com.book.progress.repository.ReadingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,16 +141,24 @@ public class ProgressService {
     }
 
     //PORCENTAGEM
-    public void calculatePercentage(ProgressDto progressDto, ReadingDto readingDto){
+    public void calculatePercentage(ProgressDto progressDto, ReadingDto readingDto) {
         if (readingDto.getCurrentPage() != null
-            && readingDto.getBook() != null
-            && readingDto.getBook().getTotalPages() != null
-            && readingDto.getBook().getTotalPages()>0) {
+                && readingDto.getBook() != null
+                && readingDto.getBook().getTotalPages() != null
+                && readingDto.getBook().getTotalPages() > 0) {
 
             double percentage = (double) readingDto.getCurrentPage() / readingDto.getBook().getTotalPages() * 100;
-            progressDto.setPercentage(percentage);
+
+            // Define a porcentagem, limitando-a a no máximo 100%
+            progressDto.setPercentage(Math.min(percentage, 100.0));
+
+            // Incrementa `booksRead` uma vez quando `percentage` atinge 100%
+            if (progressDto.getPercentage() == 100.0 && progressDto.getBooksRead() == 0) {
+                progressDto.setBooksRead(progressDto.getBooksRead() + 1);
+            }
         } else {
             progressDto.setPercentage(0.0);
         }
     }
+
 }
