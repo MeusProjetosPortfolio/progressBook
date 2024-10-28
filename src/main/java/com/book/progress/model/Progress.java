@@ -26,5 +26,7 @@ public class Progress {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-
+    // NOTA DO PROGRESSO
+    @Column(length = 500)
+    private String progressNote;
 }
