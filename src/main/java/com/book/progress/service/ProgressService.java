@@ -1,10 +1,12 @@
 package com.book.progress.service;
 
+import com.book.progress.data.dto.ArchievementDto;
 import com.book.progress.data.dto.ProgressDto;
 import com.book.progress.data.dto.ReadingDto;
 import com.book.progress.dozer.DozerConverter;
 import com.book.progress.exception.CommonsException;
 import com.book.progress.model.Progress;
+import com.book.progress.repository.ArchievementRepository;
 import com.book.progress.repository.ProgressRepository;
 import com.book.progress.repository.ReadingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProgressService {
@@ -22,6 +25,9 @@ public class ProgressService {
 
     @Autowired
     private ReadingRepository readingRepository;
+
+    @Autowired
+    private ArchievementRepository archievementRepository;
 
     //LISTAR TODOS OS PROGRESSOS
     public List<ProgressDto> findAllProgress() {
@@ -141,6 +147,15 @@ public class ProgressService {
     }
 
     //PORCENTAGEM
+    public void updateAchievements(ProgressDto progressDto) {
+        List<ArchievementDto> availableAchievements = archievementRepository.findAll().stream()
+                .filter(achievement -> progressDto.getBooksRead() >= achievement.getPoints())
+                .map(achievement -> DozerConverter.parseObject(achievement, ArchievementDto.class))
+                .collect(Collectors.toList());
+
+        progressDto.setUnlockedAchievements(availableAchievements);
+    }
+
     public void calculatePercentage(ProgressDto progressDto, ReadingDto readingDto) {
         if (readingDto.getCurrentPage() != null
                 && readingDto.getBook() != null
@@ -148,13 +163,14 @@ public class ProgressService {
                 && readingDto.getBook().getTotalPages() > 0) {
 
             double percentage = (double) readingDto.getCurrentPage() / readingDto.getBook().getTotalPages() * 100;
-
-            // Define a porcentagem, limitando-a a no máximo 100%
             progressDto.setPercentage(Math.min(percentage, 100.0));
 
-            // Incrementa `booksRead` uma vez quando `percentage` atinge 100%
-            if (progressDto.getPercentage() == 100.0 && progressDto.getBooksRead() == 0) {
+            // Verifique se a leitura está completa e incrementa `booksRead`
+            if (progressDto.getPercentage() == 100.0) {
                 progressDto.setBooksRead(progressDto.getBooksRead() + 1);
+
+                // Atualize as conquistas desbloqueadas no progresso
+                updateAchievements(progressDto);
             }
         } else {
             progressDto.setPercentage(0.0);
