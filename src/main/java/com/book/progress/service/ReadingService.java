@@ -50,11 +50,21 @@ public class ReadingService {
     //BUSCA A LEITURA POR ID
     public ReadingDto findIdReading(Long id) {
         var readingEntity = readingRepository.findById(id);
-        if (readingEntity.isEmpty()){
-            throw new CommonsException(HttpStatus.NOT_FOUND,"reading.service.notfound","não foi encontrado");
+        if (readingEntity.isEmpty()) {
+            throw new CommonsException(HttpStatus.NOT_FOUND, "reading.service.notfound", "não foi encontrado");
         }
-        return DozerConverter.parseObject(readingEntity.get(),ReadingDto.class);
+
+        ReadingDto readingDto = DozerConverter.parseObject(readingEntity.get(), ReadingDto.class);
+
+        // Verifica se há um progresso associado à leitura e calcula a duração e porcentagem
+        if (readingDto.getProgress() != null) {
+            progressService.calculateDuration(readingDto.getProgress());
+            progressService.calculatePercentage(readingDto.getProgress(), readingDto);
+        }
+
+        return readingDto;
     }
+
 
     //ATUALIZAR A LEITURA
     public  ReadingDto updateReading(Long id, ReadingDto readingDto){
