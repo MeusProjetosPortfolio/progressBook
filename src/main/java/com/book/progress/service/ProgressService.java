@@ -58,7 +58,21 @@ public class ProgressService {
         }
 
         ProgressDto progressDto = DozerConverter.parseObject(progressEntity.get(), ProgressDto.class);
-        calculateDuration(progressDto);  // Calcula a duração antes de retornar
+
+        // Calcula a duração
+        calculateDuration(progressDto);
+
+        // Verifica e calcula a porcentagem e atualiza `booksRead` se houver leitura associada
+        if (progressDto.getId() != null) {
+            readingRepository.findById(progressDto.getId()).ifPresent(reading -> {
+                ReadingDto readingDto = DozerConverter.parseObject(reading, ReadingDto.class);
+                calculatePercentage(progressDto, readingDto);
+            });
+        }
+
+        // Atualiza as conquistas desbloqueadas no progresso
+        updateAchievements(progressDto);
+
         return progressDto;
     }
 
