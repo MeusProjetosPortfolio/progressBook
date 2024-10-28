@@ -29,8 +29,18 @@ public class ProgressService {
         List<Progress> progressList = progressRepository.findAll();
         List<ProgressDto> progressDtoList = DozerConverter.parseListObjects(progressList, ProgressDto.class);
 
-        // Cálculo de duração em todos os progressos
-        progressDtoList.forEach(this::calculateDuration);
+        // Cálculo de duração e porcentagem em todos os progressos
+        progressDtoList.forEach(progressDto -> {
+                    calculateDuration(progressDto); // Calcula a duração
+
+            // Tenta buscar o Reading associado para calcular a porcentagem
+            if (progressDto.getId() != null) {
+                readingRepository.findById(progressDto.getId()).ifPresent(reading -> {
+                    ReadingDto readingDto = DozerConverter.parseObject(reading, ReadingDto.class);
+                    calculatePercentage(progressDto, readingDto); // Calcula a porcentagem
+                });
+            }
+        });
 
         return progressDtoList;
     }
