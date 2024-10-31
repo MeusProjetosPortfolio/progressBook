@@ -67,17 +67,36 @@ public class ReadingService {
 
 
     //ATUALIZAR A LEITURA
-    public  ReadingDto updateReading(Long id, ReadingDto readingDto){
-        var existingReading = readingRepository.findById(id);
-        if (existingReading.isEmpty()){
-            throw new CommonsException(HttpStatus.NOT_FOUND, "reading.service.notfound", "Leitura não encontrado");
-        }
+    public ReadingDto updateReading(Long id, ReadingDto readingDto) {
+        var existingReading = readingRepository.findById(id)
+                .orElseThrow(() -> new CommonsException(HttpStatus.NOT_FOUND, "reading.service.notfound", "Leitura não encontrada"));
 
-        Reading readingToUpdate = DozerConverter.parseObject(readingDto,Reading.class);
+        var user = userRepository.findById(readingDto.getUser().getId())
+                .orElseThrow(() -> new CommonsException(HttpStatus.NOT_FOUND, "user.notfound", "Usuário não encontrado"));
+
+        var book = bookRepository.findById(readingDto.getBook().getId())
+                .orElseThrow(() -> new CommonsException(HttpStatus.NOT_FOUND, "book.notfound", "Livro não encontrado"));
+
+        var progress = progressRepository.findById(readingDto.getProgress().getId())
+                .orElseThrow(() -> new CommonsException(HttpStatus.NOT_FOUND, "progress.notfound", "Progresso não encontrado"));
+
+        // Atualizar a entidade Reading
+        Reading readingToUpdate = DozerConverter.parseObject(readingDto, Reading.class);
         readingToUpdate.setId(id);
+        readingToUpdate.setUser(user);
+        readingToUpdate.setBook(book);
+        readingToUpdate.setProgress(progress);
 
-        return DozerConverter.parseObject(readingRepository.save(readingToUpdate), ReadingDto.class);
+        // Salvar e converter para DTO
+        Reading savedReading = readingRepository.save(readingToUpdate);
+        ReadingDto updatedReadingDto = DozerConverter.parseObject(savedReading, ReadingDto.class);
+
+        progressService.calculateDuration(updatedReadingDto.getProgress());
+        progressService.calculatePercentage(updatedReadingDto.getProgress(), updatedReadingDto);
+
+        return updatedReadingDto;
     }
+
 
     //SALVAR A LEITURA
     public ReadingDto saveReading(ReadingDto readingDto){
