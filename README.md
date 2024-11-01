@@ -93,6 +93,12 @@ A API utiliza o Flyway para gerenciar as migrações do banco de dados. Ao inici
 - Frontend da API.
 - Filtro com o ranking de leitura com base nas notas. 
 
+## Autor
+João Vitor Costa Rolim
+
+## Repositório
+https://github.com/MeusProjetosPortfolio/progressBook
+
 ## Contribuição
 Contribuições são bem-vindas! Fique à vontade para enviar PRs com melhorias, correções de bugs ou novas funcionalidades.
 
